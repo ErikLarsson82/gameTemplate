@@ -3,27 +3,25 @@ requirejs.config({
     baseUrl: 'lib',
     paths: {
       'app': '../app',
+      'GameLoop': './node_modules/GameLoop/GameLoop'
     }
 });
 
 requirejs([
-  'app/game'
+  'app/game',
+  'GameLoop'
 ], function (game) {
 
-    let running = true;
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
 
-    window.addEventListener('keydown', function (e) {
-        if (e.keyCode === 80) {
-            running = !running;
-        }
-    });
-
-    game.init();
-
-    function gameLoop() {
-        window.requestAnimationFrame(gameLoop);
-        if (!running) return;
-        game.tick();
+    var config = {
+        callback: function(delta) { game.tick(delta); game.draw(context, canvas); },
+        fpsMode: 'screenHz',
+        fps: 144,
+        autoStart: true,
+        createDebugKeyBoardShortcuts: true
     }
-    gameLoop();
+
+    var gameLoop = new GameLoop(config);
 })
