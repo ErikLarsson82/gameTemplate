@@ -1,8 +1,5 @@
 {
-  "name": "gametemplate",
-  "version": "0.1.0",
-  "main": "main.js",
-  "dependencies": {
-    "grunt": "^1.0.1"
-  }
+  "name"    : "your-app",
+  "version" : "0.1.0",
+  "main"    : "main.js"
 }
