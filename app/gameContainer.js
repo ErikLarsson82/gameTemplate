@@ -10,17 +10,22 @@ requirejs.config({
 
 requirejs([
   'app/game',
+  'app/splash',
   'GameLoop',
   'Ob',
-], function (game, GameLoop, Obscen) {
+], function (game, splash, GameLoop, Ob) {
     
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
 
-    game.init();
-
+    const sceneManager = new Ob.SceneManager()
+ 
+    sceneManager.setScenes([game, splash])
+     
+    sceneManager.changeScene('Splash')
+    
     var config = {
-        callback: function(delta) { game.tick(delta); game.draw(context, canvas); },
+        callback: function(delta) { sceneManager.update(delta); sceneManager.draw(context, canvas); },
         fpsMode: 'fixed',
         fps: 60,
         autoStart: true,

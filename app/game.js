@@ -1,8 +1,10 @@
 define('app/game', [
+    'Ob',
     'underscore',
     'userInput',
     'utils'
 ], function (
+    Ob,
     _,
     userInput,
     utils
@@ -28,10 +30,10 @@ define('app/game', [
         }
     }
 
-    return {
-        init: function() {
-            context.font = "20px Georgia";
-
+    return new Ob.Scene({
+        name: 'Game',
+        create: function() {
+            gameObjects = [];
             gameObjects.push(new GameObject({
                 hitbox: {
                     x: 0,
@@ -40,8 +42,12 @@ define('app/game', [
                     height: 10
                 }
             }));
+            context.font = "20px Georgia";
         },
-        tick: function(delta) {
+        destroy: function() {
+            gameObjects = [];
+        },
+        update: function(delta) {
             _.each(gameObjects, function(gameObject) {
                 gameObject.tick(delta);
             });
@@ -54,5 +60,5 @@ define('app/game', [
                 gameObject.draw();
             });
         }
-    }
+    })
 });
